@@ -17,6 +17,7 @@ export PATH="$PATH":"/usr/local/opt/ruby@2.7/bin"
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/pakorn/.oh-my-zsh"
 alias matlab="/Applications/MATLAB_R2020a.app/bin/matlab -nodesktop"
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/.git/ --work-tree=$HOME'
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
