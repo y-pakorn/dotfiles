@@ -2,6 +2,12 @@
 
 Dotfiles for macos, zsh
 
+Font used:
+- Fira Code 13px
+- Hack Nerd 14px (For Non-ASCII)
+
+Color: [Onedark](https://github.com/joshdick/onedark.vim)
+
 ![prompt](https://i.imgur.com/SQNvaun.png)
 
 ## Installation
@@ -16,6 +22,7 @@ Dotfiles for macos, zsh
 - tmux
 
 ### Install dotfiles
+
 ```zsh
 $ cd $HOME
 $ echo ".cfg" >> .gitignore
