@@ -15,7 +15,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'dart-lang/dart-vim-plugin'
 Plug 'ryanoasis/vim-devicons'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
 Plug '907th/vim-auto-save'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/tagbar'
@@ -42,6 +43,7 @@ endif
 colorscheme onedark 
 
 hi Normal guibg=NONE ctermbg=NONE
+hi MatchParen guibg=NONE guifg=#F04A58 gui=bold
 
 
 set clipboard+=unnamedplus
@@ -74,13 +76,24 @@ set wildmode=longest,list,full
 set splitbelow splitright
 set rtp+=/usr/local/opt/fzf
 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 "set statusline+=\ [%c]
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
+"
+let g:tagbar_type_dart = { 'ctagsbin': '~/.pub-cache/bin/dart_ctags' }
 
 
-let g:python_host_program = "/"
-let g:pymode_python = 'usr/local/bin/python3' 
+let g:python3_host_prog = '/usr/local/bin/python3'
+let g:pymode_python = '/usr/local/bin/python3' 
 let g:pyindent_searchpair_timeout = 10
 
 
@@ -171,6 +184,7 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -201,8 +215,6 @@ else
 endif
 
 inoremap <silent><expr> <c-space> coc#refresh()
-
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Check if NERDTree is open or active
 function! IsNERDTreeOpen()        
@@ -278,6 +290,9 @@ function! CloseHiddenBuffers()
             exec "bdelete ".num
         endif
     endfor
+
+    call coc#float#close_all()
+    "call <C-w>o
 endfunction
 
 au BufEnter * call CloseHiddenBuffers()
@@ -290,6 +305,15 @@ nnoremap <C-p> :bprevious<CR>
   "autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
   "autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 "augroup END
+"
+"if has('nvim-0.4.0') || has('patch-8.2.0750')
+  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+"endif
 
 
 "map <Leader><Leader>l <Plug>(easymotion-lineforward)
@@ -300,8 +324,8 @@ nmap <Leader><Leader>k <Plug>(coc-smartf-backward)
 "map <Leader><Leader>h <Plug>(easymotion-linebackward)
 "
 augroup Smartf
-  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#EF3340
-  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#504945
+  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=#F04A58
+  autocmd User SmartfLeave :hi Conceal ctermfg=239 guifg=#282C34
 augroup end
 
 " Go to tab by number
@@ -315,3 +339,5 @@ noremap <silent><leader>7 7gt
 noremap <silent><leader>8 8gt
 noremap <silent><leader>9 9gt
 noremap <silent><leader>0 :tablast<cr>
+
+nmap <Esc> :call coc#float#close_all() <CR>

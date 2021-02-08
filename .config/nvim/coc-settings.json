@@ -4,7 +4,7 @@
   "python.linting.lintOnSave": false,
   "python.formatting.provider": "black",
   "python.pythonPath": "/usr/local/bin/python3",
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -24,14 +24,15 @@
     "--generate-members"
   ],
   "suggest.floatEnable": true,
-  "diagnostic.refreshOnInsertMode": true,
+  "diagnostic.refreshOnInsertMode": false,
   "flutter.lsp.initialization.closingLabels": true,
   "suggest.timeout": 500,
-  "smartf.timeout": 1200,
+  "smartf.timeout": 800,
   "smartf.wordJump": false,
   "signature.triggerSignatureWait": 400,
   "rust-analyzer.inlayHints.refreshOnInsertMode": false,
   "rust-analyzer.diagnostics.enable": false,
   "rust.wait_to_build": 500,
-  "coc.preferences.jumpCommand": "tabe"
+  "coc.preferences.jumpCommand": "tabe",
+  "git.enableGlobalStatus": false
 }
