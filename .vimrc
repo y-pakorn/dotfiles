@@ -27,6 +27,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'tpope/vim-fugitive'
+Plug 'rakr/vim-one'
+Plug 'Asheq/close-buffers.vim'
 call plug#end()
 
 if (has('nvim'))
@@ -39,8 +41,13 @@ endif
 
 "let g:material_terminal_italics=1
 "let g:material_theme_style='darker'
-"g:onedark_terminal_italics=1
 colorscheme onedark 
+let g:onedark_terminal_italics=1
+"colorscheme one
+"set background=dark " for the dark version
+" set background=light " for the light version
+"let g:one_allow_italics = 1
+
 
 hi Normal guibg=NONE ctermbg=NONE
 hi MatchParen guibg=NONE guifg=#F04A58 gui=bold
@@ -64,14 +71,26 @@ set incsearch
 set rnu
 set nu
 set laststatus=2
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Give more space for displaying messages.
 set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
 set updatetime=300
+
 set shiftwidth=2
 set timeoutlen=500
 set ttimeoutlen=0
 set cursorline
+
+" Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
+
 set wildmode=longest,list,full
 set splitbelow splitright
 set rtp+=/usr/local/opt/fzf
@@ -109,8 +128,12 @@ let g:netrw_banner=0
 let g:netrw_winsize=25
 
 let g:airline_theme='minimalist'
+"let g:airline_minimalist_showmod = 1
 "let g:airline_theme='onedark'
+"let g:airline_extensions = []
+let g:airline#extensions#tagbar#enabled = 0
 let g:airline_powerline_fonts = 1
+let g:airline_highlighting_cache = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tmuxline#enabled = 1
@@ -146,6 +169,8 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+let g:loaded_syntastic_dart_dartanalyzer_checker = 0
+
 nnoremap <silent><leader>h :wincmd h<CR>
 nnoremap <silent><leader>j :wincmd j<CR>
 nnoremap <silent><leader>k :wincmd k<CR>
@@ -153,6 +178,7 @@ nnoremap <silent><leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :NERDTreeToggle<CR>
 nnoremap <leader>pt :TagbarToggle<CR>
+nnoremap <leader>po :CocCommand flutter.toggleOutline<CR>
 nnoremap <silent> <Leader>= :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 nnoremap <silent> <Leader>_ :resize -5<CR>
@@ -202,19 +228,42 @@ nmap <leader>cr  <Plug>(coc-rename)
 nmap <leader>cf  <Plug>(coc-format-selected)
 vmap <leader>cf  <Plug>(coc-format-selected)
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
 else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-inoremap <silent><expr> <c-space> coc#refresh()
+"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+"" position. Coc only does snippet and additional edit on confirm.
+"" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+"if exists('*complete_info')
+  "inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+"else
+  "inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"endif
+
+"inoremap <silent><expr> <c-space> coc#refresh()
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Check if NERDTree is open or active
 function! IsNERDTreeOpen()        
@@ -275,27 +324,38 @@ nnoremap <silent> <leader>fb :Buffers<CR>
 
 nnoremap <silent> <leader>/ :let @/=""<CR>
 
-function! CloseHiddenBuffers()
-    " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    " close any buffers hidden
-    " <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    let open_buffers = []
+"function! CloseHiddenBuffers()
+    "" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    "" close any buffers hidden
+    "" <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    "let open_buffers = []
 
-    for i in range(tabpagenr('$'))
-        call extend(open_buffers, tabpagebuflist(i + 1))
-    endfor
+    "for i in range(tabpagenr('$'))
+        "call extend(open_buffers, tabpagebuflist(i + 1))
+    "endfor
 
-    for num in range(1, bufnr("$") + 1)
-        if buflisted(num) && index(open_buffers, num) == -1
-            exec "bdelete ".num
-        endif
-    endfor
-
-    call coc#float#close_all()
-    "call <C-w>o
+    "for num in range(1, bufnr("$") + 1)
+        "if buflisted(num) && index(open_buffers, num) == -1
+            "exec "bdelete ".num
+        "endif
+    "endfor
+    ""call <C-w>o
+"endfunction
+"
+function! DeleteHiddenBuffers()
+  let tpbl=[]
+  let closed = 0
+  call map(range(1, tabpagenr('$')), 'extend(tpbl, tabpagebuflist(v:val))')
+  for buf in filter(range(1, bufnr('$')), 'bufexists(v:val) && index(tpbl, v:val)==-1')
+    if getbufvar(buf, '&mod') == 0
+      silent execute 'bwipeout' buf
+      let closed += 1
+    endif
+  endfor
+  "echo "Closed ".closed." hidden buffers"
 endfunction
 
-au BufEnter * call CloseHiddenBuffers()
+au BufEnter * call DeleteHiddenBuffers()
 
 nnoremap <C-n> :bnext<CR>
 nnoremap <C-p> :bprevious<CR>
@@ -306,14 +366,15 @@ nnoremap <C-p> :bprevious<CR>
   "autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 "augroup END
 "
-"if has('nvim-0.4.0') || has('patch-8.2.0750')
-  "nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  "inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  "inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  "vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  "vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-"endif
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 
 "map <Leader><Leader>l <Plug>(easymotion-lineforward)
@@ -340,4 +401,11 @@ noremap <silent><leader>8 8gt
 noremap <silent><leader>9 9gt
 noremap <silent><leader>0 :tablast<cr>
 
-nmap <Esc> :call coc#float#close_all() <CR>
+" navigate buffer
+nmap <silent><leader>bn :bn<cr>
+nmap <silent><leader>bp :bp<cr>
+
+"Buffer delete menu
+nnoremap <silent> Q     :Bdelete menu<CR>
+
+"nmap <Esc> :call coc#float#close_all() <CR>
