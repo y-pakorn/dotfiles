@@ -34,5 +34,20 @@
   "rust-analyzer.diagnostics.enable": false,
   "rust.wait_to_build": 500,
   "coc.preferences.jumpCommand": "tab drop",
-  "git.enableGlobalStatus": false
+  "git.enableGlobalStatus": false,
+  "languageserver": {
+    "solidity": {
+      "command": "/usr/local/bin/solc",
+      "args": [
+        "--lsp"
+      ],
+      "trace.server": "verbose",
+      "rootPatterns": [
+        ".git/"
+      ],
+      "filetypes": [
+        "solidity"
+      ]
+    }
+  }
 }

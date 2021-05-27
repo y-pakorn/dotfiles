@@ -29,6 +29,7 @@ Plug 'inside/vim-search-pulse'
 Plug 'tpope/vim-fugitive'
 Plug 'rakr/vim-one'
 Plug 'Asheq/close-buffers.vim'
+Plug 'TovarishFin/vim-solidity'
 call plug#end()
 
 if (has('nvim'))
