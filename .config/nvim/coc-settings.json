@@ -33,6 +33,6 @@
   "rust-analyzer.inlayHints.refreshOnInsertMode": false,
   "rust-analyzer.diagnostics.enable": false,
   "rust.wait_to_build": 500,
-  "coc.preferences.jumpCommand": "tabe",
+  "coc.preferences.jumpCommand": "tab drop",
   "git.enableGlobalStatus": false
 }

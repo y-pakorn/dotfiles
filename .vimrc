@@ -136,11 +136,20 @@ let g:airline_powerline_fonts = 1
 let g:airline_highlighting_cache = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
+
 let g:airline#extensions#tmuxline#enabled = 1
 let airline#extensions#tmuxline#snapshot_file = "~/.tmux-status.conf"
-
 let g:tmuxline_powerline_separators = 2
 let g:tmuxline_preset = 'powerline'
+let g:tmuxline_status_justify = 'left'
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : '#I #W #F',
+      \'cwin' : '#I #W #F',
+      \'y'    : [ '%a', '%r', '%Y-%m-%d' ],
+      \'z'    : '#H',
+      \ }
+
 
 "Include <,> in auto pairs
 let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''", "`":"`", '<':'>'}
