@@ -4,7 +4,7 @@
   "python.linting.lintOnSave": false,
   "python.formatting.provider": "black",
   "python.pythonPath": "/usr/local/bin/python3",
-  "coc.preferences.formatOnType": false,
+  "coc.preferences.formatOnType": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",
@@ -27,26 +27,24 @@
   "diagnostic.refreshOnInsertMode": false,
   "flutter.lsp.initialization.closingLabels": true,
   "suggest.timeout": 500,
-  "smartf.timeout": 800,
+  "smartf.timeout": 600,
   "smartf.wordJump": false,
   "signature.triggerSignatureWait": 400,
-  "rust-analyzer.inlayHints.refreshOnInsertMode": false,
-  "rust-analyzer.diagnostics.enable": false,
-  "rust.wait_to_build": 500,
+  "rust-analyzer.inlayHints.refreshOnInsertMode": true,
   "coc.preferences.jumpCommand": "tab drop",
-  "git.enableGlobalStatus": false,
+  "git.enableGlobalStatus": true,
   "languageserver": {
-    "solidity": {
-      "command": "/usr/local/bin/solc",
+    "graphql": {
+      "command": "graphql-lsp",
       "args": [
-        "--lsp"
-      ],
-      "trace.server": "verbose",
-      "rootPatterns": [
-        ".git/"
+        "server",
+        "-m",
+        "stream"
       ],
       "filetypes": [
-        "solidity"
+        "typescript",
+        "typescriptreact",
+        "graphql"
       ]
     }
   }

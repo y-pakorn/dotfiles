@@ -8,8 +8,14 @@ fi
 # Path for dart plugins
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+# NeoVim for default editor
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 # Path for ruby
 export PATH="$PATH":"/usr/local/opt/ruby@2.7/bin"
+
+export FLUTTER_ROOT="/Users/pakorn/Development/Tools/flutter"
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH

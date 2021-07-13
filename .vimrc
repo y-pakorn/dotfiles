@@ -6,7 +6,6 @@ syntax on
 call plug#begin('~/.vim/plugged')
 Plug 'leafgarland/typescript-vim'
 Plug 'mbbill/undotree'
-Plug 'joshdick/onedark.vim'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'jiangmiao/auto-pairs'
@@ -26,10 +25,19 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'inside/vim-search-pulse'
+Plug 'rbong/vim-flog'
 Plug 'tpope/vim-fugitive'
 Plug 'rakr/vim-one'
+Plug 'navarasu/onedark.nvim'
 Plug 'Asheq/close-buffers.vim'
 Plug 'TovarishFin/vim-solidity'
+Plug 'jparise/vim-graphql'
+Plug 'cespare/vim-toml'
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install && yarn add prettier-plugin-solidity',
+  \ 'branch': 'release/1.x',
+  \ 'for': [
+    \ 'solidity'] }
 call plug#end()
 
 if (has('nvim'))
@@ -42,17 +50,17 @@ endif
 
 "let g:material_terminal_italics=1
 "let g:material_theme_style='darker'
+let g:onedark_style = 'warmer'
 colorscheme onedark 
-let g:onedark_terminal_italics=1
+"let g:onedark_terminal_italics=1
 "colorscheme one
-"set background=dark " for the dark version
-" set background=light " for the light version
-"let g:one_allow_italics = 1
+""set background=dark " for the dark version
+"" sdarkeret background=light " for the light version
+""let g:one_allow_italics = 1
 
 
-hi Normal guibg=NONE ctermbg=NONE
+"hi Normal guibg=NONE ctermbg=NONE
 hi MatchParen guibg=NONE guifg=#F04A58 gui=bold
-
 
 set clipboard+=unnamedplus
 
@@ -105,6 +113,12 @@ else
   set signcolumn=yes
 endif
 
+set runtimepath^=~/Development/Tools/coc-solidity
+
+let g:prettier#exec_cmd_path = '~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
+"let g:prettier#autoformat = 0
+"autocmd BufWritePre *.sol Prettier
+
 "set statusline+=\ [%c]
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
@@ -144,7 +158,6 @@ let g:tmuxline_powerline_separators = 2
 let g:tmuxline_preset = 'powerline'
 let g:tmuxline_status_justify = 'left'
 let g:tmuxline_preset = {
-      \'a'    : '#S',
       \'win'  : '#I #W #F',
       \'cwin' : '#I #W #F',
       \'y'    : [ '%a', '%r', '%Y-%m-%d' ],
@@ -161,6 +174,7 @@ let g:fzf_action = {
   \ 'ctrl-t': 'GotoOrOpen tab',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+
 let g:fzf_buffers_jump = 1
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.5 } }
 let g:fzf_nvim_statusline = 0
@@ -198,6 +212,7 @@ vnoremap <Leader> K :m '<-2<CR>gv=gv
 tnoremap <Esc> <C-\><C-n>
 
 nmap <silent>gd <Plug>(coc-definition)
+nmap <silent>go :call CocAction('jumpDefinition', 'edit')<cr>
 nmap <silent>gs :call CocAction('jumpDefinition', 'split')<cr>
 nmap <silent>gv :call CocAction('jumpDefinition', 'vsplit')<cr>
 
