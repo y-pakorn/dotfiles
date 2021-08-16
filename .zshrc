@@ -8,6 +8,9 @@ fi
 # Path for dart plugins
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+# For GPG Signing
+export GPG_TTY=$(tty)
+
 # NeoVim for default editor
 export VISUAL=nvim
 export EDITOR="$VISUAL"

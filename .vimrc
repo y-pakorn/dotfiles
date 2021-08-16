@@ -16,28 +16,28 @@ Plug 'dart-lang/dart-vim-plugin'
 Plug 'ryanoasis/vim-devicons'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'yarn install --frozen-lockfile'}
-Plug '907th/vim-auto-save'
+"Plug '907th/vim-auto-save'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'preservim/tagbar'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
+"Plug 'preservim/tagbar'
+"Plug 'godlygeek/tabular'
+"Plug 'plasticboy/vim-markdown'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'edkolev/tmuxline.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'rbong/vim-flog'
 Plug 'tpope/vim-fugitive'
-Plug 'rakr/vim-one'
+"Plug 'rakr/vim-one'
 Plug 'navarasu/onedark.nvim'
 Plug 'Asheq/close-buffers.vim'
 Plug 'TovarishFin/vim-solidity'
 Plug 'jparise/vim-graphql'
 Plug 'cespare/vim-toml'
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install && yarn add prettier-plugin-solidity',
-  \ 'branch': 'release/1.x',
-  \ 'for': [
-    \ 'solidity'] }
+"Plug 'prettier/vim-prettier', {
+  "\ 'do': 'yarn install && yarn add prettier-plugin-solidity',
+  "\ 'branch': 'release/1.x',
+  "\ 'for': [
+    "\ 'solidity'] }
 call plug#end()
 
 if (has('nvim'))
@@ -115,7 +115,7 @@ endif
 
 set runtimepath^=~/Development/Tools/coc-solidity
 
-let g:prettier#exec_cmd_path = '~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
+"let g:prettier#exec_cmd_path = '~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
 "let g:prettier#autoformat = 0
 "autocmd BufWritePre *.sol Prettier
 
@@ -123,7 +123,7 @@ let g:prettier#exec_cmd_path = '~/.vim/plugged/vim-prettier/node_modules/.bin/pr
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 "set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "
-let g:tagbar_type_dart = { 'ctagsbin': '~/.pub-cache/bin/dart_ctags' }
+"let g:tagbar_type_dart = { 'ctagsbin': '~/.pub-cache/bin/dart_ctags' }
 
 
 let g:python3_host_prog = '/usr/local/bin/python3'
@@ -131,11 +131,11 @@ let g:pymode_python = '/usr/local/bin/python3'
 let g:pyindent_searchpair_timeout = 10
 
 
-let g:vim_markdown_math = 1
-let g:vim_markdown_frontmatter = 1
-let g:vim_markdown_toml_frontmatter = 1
-let g:vim_markdown_folding_disabled = 1
-let g:vim_markdown_new_list_item_indent = 2
+"let g:vim_markdown_math = 1
+"let g:vim_markdown_frontmatter = 1
+"let g:vim_markdown_toml_frontmatter = 1
+"let g:vim_markdown_folding_disabled = 1
+"let g:vim_markdown_new_list_item_indent = 2
 
 
 let g:netrw_browse_split=2
@@ -433,4 +433,4 @@ nmap <silent><leader>bp :bp<cr>
 "Buffer delete menu
 nnoremap <silent> Q     :Bdelete menu<CR>
 
-"nmap <Esc> :call coc#float#close_all() <CR>
+nmap <Esc> :call coc#float#close_all() <CR>
