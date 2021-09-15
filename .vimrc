@@ -201,7 +201,7 @@ nnoremap <silent><leader>k :wincmd k<CR>
 nnoremap <silent><leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :NERDTreeToggle<CR>
-nnoremap <leader>pt :TagbarToggle<CR>
+"nnoremap <leader>pt :TagbarToggle<CR>
 nnoremap <leader>po :CocCommand flutter.toggleOutline<CR>
 nnoremap <silent> <Leader>= :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
@@ -231,8 +231,6 @@ function! s:show_documentation()
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
@@ -433,4 +431,4 @@ nmap <silent><leader>bp :bp<cr>
 "Buffer delete menu
 nnoremap <silent> Q     :Bdelete menu<CR>
 
-nmap <Esc> :call coc#float#close_all() <CR>
+nmap <silent><Esc> :call coc#float#close_all() <CR>

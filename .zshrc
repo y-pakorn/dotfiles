@@ -8,6 +8,8 @@ fi
 # Path for dart plugins
 export PATH="$PATH":"$HOME/.pub-cache/bin"
 
+export NODE_PATH="/usr/local/lib/node_modules"
+
 # For GPG Signing
 export GPG_TTY=$(tty)
 
@@ -18,6 +20,8 @@ export EDITOR="$VISUAL"
 # Path for ruby
 export PATH="$PATH":"/usr/local/opt/ruby@2.7/bin"
 
+# Path for flutter
+export PATH="$PATH":"/Users/pakorn/Development/Tools/flutter/bin"
 export FLUTTER_ROOT="/Users/pakorn/Development/Tools/flutter"
 
 # If you come from bash you might have to change your $PATH.
@@ -25,7 +29,7 @@ export FLUTTER_ROOT="/Users/pakorn/Development/Tools/flutter"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/pakorn/.oh-my-zsh"
-alias matlab="/Applications/MATLAB_R2020a.app/bin/matlab -nodesktop"
+alias matlab="/Applications/MATLAB_R2021a.app/bin/matlab -nodesktop"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/.git/ --work-tree=$HOME'
 
 # Set name of the theme to load --- if set to "random", it will

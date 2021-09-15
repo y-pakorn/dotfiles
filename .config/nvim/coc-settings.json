@@ -31,6 +31,8 @@
   "smartf.wordJump": false,
   "signature.triggerSignatureWait": 400,
   "rust-analyzer.inlayHints.refreshOnInsertMode": true,
+  "rust-analyzer.enable": true,
+  "rust-analyzer.diagnostics.enable": true,
   "coc.preferences.jumpCommand": "tab drop",
   "git.enableGlobalStatus": true,
   "languageserver": {
@@ -47,5 +49,7 @@
         "graphql"
       ]
     }
-  }
+  },
+  "flutter.lsp.initialization.outline": false,
+  "coc.preferences.bracketEnterImprove": false
 }
