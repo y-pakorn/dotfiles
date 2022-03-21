@@ -1,6 +1,5 @@
 let mapleader=" "
 
-
 syntax on
 
 call plug#begin('~/.vim/plugged')
@@ -50,19 +49,33 @@ endif
 
 "let g:material_terminal_italics=1
 "let g:material_theme_style='darker'
-let g:onedark_style = 'warmer'
+let g:onedark_config = {
+  \ 'style': 'warmer',
+  \ 'toggle_style_key': '<leader>ts',
+  \ 'ending_tildes': v:true,
+  \ 'code_style': {
+    \ 'keywords': 'bold',
+    \ 'strings': 'italic',
+  \ },
+  \ 'diagnostics': {
+    \ 'darker': v:true,
+    \ 'background': v:true,
+    \ 'undercurl': v:true,
+  \ },
+\ }
 colorscheme onedark 
 "let g:onedark_terminal_italics=1
 "colorscheme one
-""set background=dark " for the dark version
+"set background=dark " for the dark version
 "" sdarkeret background=light " for the light version
 ""let g:one_allow_italics = 1
 
 
 "hi Normal guibg=NONE ctermbg=NONE
 hi MatchParen guibg=NONE guifg=#F04A58 gui=bold
+"hi CocHintSign guibg=NONE guifg=#d19a66 ctermbg=NONE
 
-set clipboard+=unnamedplus
+"set clipboard+=unnamedplus
 
 set hidden
 set noerrorbells
@@ -113,7 +126,7 @@ else
   set signcolumn=yes
 endif
 
-set runtimepath^=~/Development/Tools/coc-solidity
+"set runtimepath^=~/Development/Tools/coc-solidity
 
 "let g:prettier#exec_cmd_path = '~/.vim/plugged/vim-prettier/node_modules/.bin/prettier'
 "let g:prettier#autoformat = 0
@@ -125,6 +138,12 @@ set runtimepath^=~/Development/Tools/coc-solidity
 "
 "let g:tagbar_type_dart = { 'ctagsbin': '~/.pub-cache/bin/dart_ctags' }
 
+"let g:coc_filetype_map = {'tsx': 'typescriptreact', 'jsx': 'javascriptreact'}
+augroup ReactFiletypes
+  autocmd!
+  autocmd BufRead,BufNewFile *.jsx set filetype=javascriptreact
+  autocmd BufRead,BufNewFile *.tsx set filetype=typescriptreact
+augroup END
 
 let g:python3_host_prog = '/usr/local/bin/python3'
 let g:pymode_python = '/usr/local/bin/python3' 
@@ -166,7 +185,7 @@ let g:tmuxline_preset = {
 
 
 "Include <,> in auto pairs
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''", "`":"`", '<':'>'}
+"let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''", "`":"`", '<':'>'}
 
 let g:NERDTreeGitStatusUseNerdFonts = 1
 
@@ -432,3 +451,5 @@ nmap <silent><leader>bp :bp<cr>
 nnoremap <silent> Q     :Bdelete menu<CR>
 
 nmap <silent><Esc> :call coc#float#close_all() <CR>
+
+autocmd FileType scss setl iskeyword+=@-@
