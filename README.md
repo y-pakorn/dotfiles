@@ -3,12 +3,12 @@
 Dotfiles for macos, zsh
 
 Font used:
-- Fira Code 13px
-- Hack Nerd 14px (For Non-ASCII)
+- Fira Code 12px
+- Hack Nerd 13px (For Non-ASCII)
+- Horizontal Spacing 101
+- Vertical Spacing 100
 
-Color: [Onedark](https://github.com/joshdick/onedark.vim)
-
-![prompt](https://i.imgur.com/SQNvaun.png)
+Color: [Onedark](https://github.com/navarasu/onedark.nvim)
 
 ## Installation
 
