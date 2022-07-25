@@ -148,3 +148,9 @@ export PKG_CONFIG_PATH="/usr/local/opt/tcl-tk/lib/pkgconfig"
 export PATH=$PATH:$(go env GOPATH)/bin
 export GOPATH=$(go env GOPATH)
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+alias activate_cairo='source /Users/pakorn/cairo_venv/bin/activate'
+
+alias git_wicca='git -c user.name="wicca-money" -c user.email="wicca.money@gmail.com" -c user.signingkey=13DBAD5CA7134F70'
+
+alias git_lonely='git -c user.name="HandsomeLonelyBoi" -c user.email="handsomelonelyboi@proton.me" -c user.signingkey=42EBDD6F897E54AF'

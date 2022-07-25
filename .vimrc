@@ -32,6 +32,10 @@ Plug 'Asheq/close-buffers.vim'
 Plug 'TovarishFin/vim-solidity'
 Plug 'jparise/vim-graphql'
 Plug 'cespare/vim-toml'
+Plug 'sheerun/vim-polyglot'
+Plug 'iden3/vim-circom-syntax'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
 "Plug 'prettier/vim-prettier', {
   "\ 'do': 'yarn install && yarn add prettier-plugin-solidity',
   "\ 'branch': 'release/1.x',
@@ -63,6 +67,7 @@ let g:onedark_config = {
     \ 'undercurl': v:true,
   \ },
 \ }
+
 colorscheme onedark 
 "let g:onedark_terminal_italics=1
 "colorscheme one
@@ -71,9 +76,9 @@ colorscheme onedark
 ""let g:one_allow_italics = 1
 
 
-"hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 hi MatchParen guibg=NONE guifg=#F04A58 gui=bold
-"hi CocHintSign guibg=NONE guifg=#d19a66 ctermbg=NONE
+hi CocHintSign guibg=NONE guifg=#d19a66 ctermbg=NONE
 
 "set clipboard+=unnamedplus
 
@@ -137,6 +142,15 @@ endif
 "set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}%{get(b:,'coc_git_blame','')}
 "
 "let g:tagbar_type_dart = { 'ctagsbin': '~/.pub-cache/bin/dart_ctags' }
+
+autocmd BufWritePost *.cairo silent call RunCairoFmt()
+function RunCairoFmt()
+  ! cairo-format % -i  2> /dev/null
+  :e
+endfunction
+
+au BufReadPost *.cairo set filetype=cairo
+au Filetype cairo set syntax=cairo
 
 "let g:coc_filetype_map = {'tsx': 'typescriptreact', 'jsx': 'javascriptreact'}
 augroup ReactFiletypes
@@ -220,6 +234,7 @@ nnoremap <silent><leader>k :wincmd k<CR>
 nnoremap <silent><leader>l :wincmd l<CR>
 nnoremap <leader>u :UndotreeShow<CR>
 nnoremap <leader>pv :NERDTreeToggle<CR>
+nnoremap <leader>pd :DiffviewOpen<CR>
 "nnoremap <leader>pt :TagbarToggle<CR>
 nnoremap <leader>po :CocCommand flutter.toggleOutline<CR>
 nnoremap <silent> <Leader>= :vertical resize +5<CR>

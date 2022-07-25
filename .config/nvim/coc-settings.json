@@ -1,7 +1,7 @@
 {
   "markdownlint.onChange": false,
-  "python.linting.enabled": false,
-  "python.linting.lintOnSave": false,
+  "python.linting.enabled": true,
+  "python.linting.lintOnSave": true,
   "python.formatting.provider": "yapf",
   "python.pythonPath": "/usr/local/bin/python3",
   "coc.preferences.formatOnType": true,
@@ -35,14 +35,21 @@
   "smartf.wordJump": false,
   "signature.triggerSignatureWait": 400,
   "rust-analyzer.inlayHints.refreshOnInsertMode": true,
-  "rust-analyzer.inlayHints.typeHintsSeparator": "-> ",
-  "rust-analyzer.hover.documentation": true,
+  "rust-analyzer.inlayHints.renderColons": true,
   "rust-analyzer.enable": true,
-  "rust-analyzer.diagnostics.enable": true,
+  "rust-analyzer.inlayHints.lifetimeElisionHints.useParameterNames": false,
   "coc.preferences.jumpCommand": "tab drop",
   "git.enableGlobalStatus": true,
   "flutter.provider.enableSnippet": true,
   "flutter.lsp.initialization.closingLabels": true,
   "coc.preferences.bracketEnterImprove": false,
-  "diagnostic.showUnused": false
+  "diagnostic.showUnused": false,
+  "languageserver": {
+    "cairo": {
+            "module": "/usr/local/lib/node_modules/cairo-ls/out/server.js",
+            "args": ["--node-ipc"],
+            "filetypes": ["cairo"],
+            "rootPatterns": [".git/"]
+    }
+  }
 }
