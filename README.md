@@ -10,6 +10,8 @@ Font used:
 
 Color: [Onedark](https://github.com/navarasu/onedark.nvim)
 
+![Screen Shot 2565-03-21 at 16 55 42](https://user-images.githubusercontent.com/48324733/159238786-d1913dd9-fc7a-4fd3-b553-402b18bf908c.png)
+
 ## Installation
 
 **Please review the code and remove the thing you don't want first, DO NOT blindly use this unless you know what it does.**
